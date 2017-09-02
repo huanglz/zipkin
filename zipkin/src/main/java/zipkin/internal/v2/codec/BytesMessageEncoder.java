@@ -19,8 +19,8 @@ import java.util.List;
  * Senders like Kafka use byte[] message encoding. This provides helpers to concatenate spans into a
  * list.
  */
-public interface MessageEncoder<M> {
-  MessageEncoder<byte[]> JSON_BYTES = new MessageEncoder<byte[]>() {
+public interface BytesMessageEncoder<M> {
+  BytesMessageEncoder<byte[]> JSON_TO_BYTES = new BytesMessageEncoder<byte[]>() {
     @Override public Encoding encoding() {
       return Encoding.JSON;
     }
@@ -47,7 +47,7 @@ public interface MessageEncoder<M> {
    * comma-separated and enclosed by brackets.
    *
    * <p>The primary use of this is batch reporting spans. For example, spans are {@link
-   * Encoder#encode(Object) encoded} one-by-one into a queue. This queue is drained up to a byte
+   * BytesEncoder#encode(Object) encoded} one-by-one into a queue. This queue is drained up to a byte
    * threshold. Then, the list is encoded with this function and reported out-of-process.
    */
   M encode(List<byte[]> encodedSpans);

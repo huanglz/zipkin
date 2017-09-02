@@ -21,23 +21,23 @@ import zipkin.internal.Util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MessageEncodingTest {
+public class BytesMessageEncoderTest {
 
   @Test public void emptyList_jsonBytes() throws IOException {
     List<byte[]> encoded = Arrays.asList();
-    assertThat(MessageEncoder.JSON_BYTES.encode(encoded))
+    assertThat(BytesMessageEncoder.JSON_TO_BYTES.encode(encoded))
       .isEqualTo("[]".getBytes(Util.UTF_8));
   }
 
   @Test public void singletonList_jsonBytes() throws IOException {
     List<byte[]> encoded = Arrays.asList(new byte[] {'1'});
-    assertThat(MessageEncoder.JSON_BYTES.encode(encoded))
+    assertThat(BytesMessageEncoder.JSON_TO_BYTES.encode(encoded))
       .isEqualTo("[1]".getBytes(Util.UTF_8));
   }
 
   @Test public void multiItemList_jsonBytes() throws IOException {
     List<byte[]> encoded = Arrays.asList(new byte[] {'3'}, new byte[] {'4'}, new byte[] {'5'});
-    assertThat(MessageEncoder.JSON_BYTES.encode(encoded))
+    assertThat(BytesMessageEncoder.JSON_TO_BYTES.encode(encoded))
       .isEqualTo("[3,4,5]".getBytes(Util.UTF_8));
   }
 }

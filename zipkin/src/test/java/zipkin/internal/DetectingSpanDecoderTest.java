@@ -19,8 +19,8 @@ import org.junit.Test;
 import zipkin.Codec;
 import zipkin.SpanDecoder;
 import zipkin.internal.v2.Span;
-import zipkin.internal.v2.codec.Encoder;
-import zipkin.internal.v2.codec.MessageEncoder;
+import zipkin.internal.v2.codec.BytesEncoder;
+import zipkin.internal.v2.codec.BytesMessageEncoder;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,16 +72,16 @@ public class DetectingSpanDecoderTest {
 
   /** Single-element reads were for legacy non-list encoding. Don't add new code that does this */
   @Test(expected = UnsupportedOperationException.class) public void readSpan_json2() {
-    decoder.readSpan(Encoder.JSON.encode(span2_1));
+    decoder.readSpan(BytesEncoder.JSON.encode(span2_1));
   }
 
   @Test(expected = IllegalArgumentException.class) public void readSpans_json2_not_list() {
-    decoder.readSpans(Encoder.JSON.encode(span2_1));
+    decoder.readSpans(BytesEncoder.JSON.encode(span2_1));
   }
 
   @Test public void readSpans_json2() {
-    byte[] message = MessageEncoder.JSON_BYTES.encode(
-      Stream.of(span2_1, span2_2).map(Encoder.JSON::encode).collect(Collectors.toList())
+    byte[] message = BytesMessageEncoder.JSON_TO_BYTES.encode(
+      Stream.of(span2_1, span2_2).map(BytesEncoder.JSON::encode).collect(Collectors.toList())
     );
 
     assertThat(decoder.readSpans(message))

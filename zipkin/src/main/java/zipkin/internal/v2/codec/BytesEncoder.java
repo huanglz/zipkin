@@ -21,8 +21,8 @@ import static zipkin.internal.v2.codec.Span2JsonAdapters.SPAN_WRITER;
 /**
  * @param <S> type of the span, usually {@link zipkin.Span}
  */
-public interface Encoder<S> {
-  Encoder<Span> JSON = new Encoder<Span>() {
+public interface BytesEncoder<S> {
+  BytesEncoder<Span> JSON = new BytesEncoder<Span>() {
     @Override public Encoding encoding() {
       return Encoding.JSON;
     }

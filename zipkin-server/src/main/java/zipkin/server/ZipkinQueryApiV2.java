@@ -37,7 +37,7 @@ import zipkin.DependencyLink;
 import zipkin.internal.V2StorageComponent;
 import zipkin.internal.v2.Call;
 import zipkin.internal.v2.Span;
-import zipkin.internal.v2.codec.Encoder;
+import zipkin.internal.v2.codec.BytesEncoder;
 import zipkin.internal.v2.storage.QueryRequest;
 import zipkin.storage.StorageComponent;
 
@@ -132,7 +132,7 @@ public class ZipkinQueryApiV2 {
       buffer.writeByte('[');
       List<Span> trace = traces.get(i);
       for (int j = 0, jLength = trace.size(); j < jLength; ) {
-        buffer.write(Encoder.JSON.encode(trace.get(j)));
+        buffer.write(BytesEncoder.JSON.encode(trace.get(j)));
         if (++j < jLength) buffer.writeByte(',');
       }
       buffer.writeByte(']');
@@ -151,7 +151,7 @@ public class ZipkinQueryApiV2 {
     Buffer buffer = new Buffer();
     buffer.writeByte('[');
     for (int i = 0, length = trace.size(); i < length; ) {
-      buffer.write(Encoder.JSON.encode(trace.get(i)));
+      buffer.write(BytesEncoder.JSON.encode(trace.get(i)));
       if (++i < length) buffer.writeByte(',');
     }
     buffer.writeByte(']');

@@ -638,7 +638,7 @@ public final class JsonCodec implements Codec {
     return writeList(STRING_WRITER, value);
   }
 
-  static <T> T read(JsonReaderAdapter<T> adapter, byte[] bytes) {
+  public static <T> T read(JsonReaderAdapter<T> adapter, byte[] bytes) {
     checkArgument(bytes.length > 0, "Empty input reading %s", adapter);
     try {
       return adapter.fromJson(jsonReader(bytes));

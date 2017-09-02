@@ -32,7 +32,7 @@ import zipkin.collector.Collector;
 import zipkin.collector.CollectorMetrics;
 import zipkin.internal.V2JsonSpanDecoder;
 import zipkin.internal.V2StorageComponent;
-import zipkin.internal.v2.codec.Encoder;
+import zipkin.internal.v2.codec.BytesEncoder;
 import zipkin.internal.v2.internal.Platform;
 import zipkin.storage.Callback;
 import zipkin.storage.QueryRequest;
@@ -157,7 +157,7 @@ final class ZipkinDispatcher extends Dispatcher {
     throws IOException {
     bout.write('[');
     for (int i = 0, length = trace.size(); i < length; ) {
-      bout.write(Encoder.JSON.encode(trace.get(i)));
+      bout.write(BytesEncoder.JSON.encode(trace.get(i)));
       if (++i < length) bout.write(',');
     }
     bout.write(']');
